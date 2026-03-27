@@ -1,19 +1,19 @@
 //HEAD_DSPH
 /*
- <DUALSPHYSICS>  Copyright (c) 2025 by Dr Jose M. Dominguez et al. (see http://dual.sphysics.org/index.php/developers/). 
+ <DUALSPHYSICS>  Copyright (c) 2025 by Dr Jose M. Dominguez et al. (see http://dual.sphysics.org/index.php/developers/).
 
  EPHYSLAB Environmental Physics Laboratory, Universidade de Vigo, Ourense, Spain.
  School of Mechanical, Aerospace and Civil Engineering, University of Manchester, Manchester, U.K.
 
- This file is part of DualSPHysics. 
+ This file is part of DualSPHysics.
 
- DualSPHysics is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License 
+ DualSPHysics is free software: you can redistribute it and/or modify it under the terms of the GNU Lesser General Public License
  as published by the Free Software Foundation; either version 2.1 of the License, or (at your option) any later version.
- 
- DualSPHysics is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details. 
 
- You should have received a copy of the GNU Lesser General Public License along with DualSPHysics. If not, see <http://www.gnu.org/licenses/>. 
+ DualSPHysics is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
+
+ You should have received a copy of the GNU Lesser General Public License along with DualSPHysics. If not, see <http://www.gnu.org/licenses/>.
 */
 
 /// \file JSphGpu.cpp \brief Implements the class \ref JSphGpu.
@@ -171,7 +171,7 @@ void JSphGpu::InitVars(){
   PoszPre_g=NULL;      //-Symplectic
   VelrhoPre_g=NULL;    //-Symplectic
 
-  ViscDt_g=NULL; 
+  ViscDt_g=NULL;
   Ace_g=NULL;
   Ar_g=NULL;
   Delta_g=NULL;
@@ -206,7 +206,7 @@ void JSphGpu::InitVars(){
   PsiCleanRhs_g=NULL;    //<vs_divclean>
   CsPsiClean_g=NULL;     //<vs_divclean>
   CsPsiCleanMax=0;       //<vs_divclean>
-  
+
   FreeGpuMemoryParticles();
 
   //-Variables for moving and floating bodies (GPU memory).
@@ -330,7 +330,7 @@ void JSphGpu::FreeCpuMemoryParticles(){
   delete AuxPos_c;   AuxPos_c=NULL;
   delete AuxVel_c;   AuxVel_c=NULL;
   delete AuxRho_c;   AuxRho_c=NULL;
-  
+
   //-Free CPU memory for array objects.
   CpuParticlesSize=0;
   if(Arrays_Cpu)Arrays_Cpu->Reset();
@@ -387,7 +387,7 @@ void JSphGpu::FreeGpuMemoryParticles(){
   delete PoszPre_g;     PoszPre_g=NULL;     //-Symplectic
   delete VelrhoPre_g;   VelrhoPre_g=NULL;   //-Symplectic
 
-  delete ViscDt_g;      ViscDt_g=NULL; 
+  delete ViscDt_g;      ViscDt_g=NULL;
   delete Ace_g;         Ace_g=NULL;
   delete Ar_g;          Ar_g=NULL;
   delete Delta_g;       Delta_g=NULL;
@@ -415,7 +415,7 @@ void JSphGpu::FreeGpuMemoryParticles(){
 
 //==============================================================================
 /// Allocates GPU memory for the particles.
-/// Reserva memoria en Gpu para las particulas. 
+/// Reserva memoria en Gpu para las particulas.
 //==============================================================================
 void JSphGpu::AllocGpuMemoryParticles(unsigned np){
   FreeGpuMemoryParticles();
@@ -472,7 +472,7 @@ void JSphGpu::AllocGpuMemoryParticles(unsigned np){
   ShiftPosfs_g=new agfloat4("ShiftPosfsg",Arrays_Gpu,false); //-NO INITIAL MEMORY.
   //-Arrays for Advanced shifting. //<vs_advshift_ini>
   if(ShiftingAdv!=NULL){
-    ShiftVel_g    =new agfloat4 ("ShiftVel_g" ,Arrays_Gpu,true); 
+    ShiftVel_g    =new agfloat4 ("ShiftVel_g" ,Arrays_Gpu,true);
     FSType_g      =new aguint   ("FSType_g"   ,Arrays_Gpu,true);
     FSNormal_g    =new agfloat3 ("FSNormal_g" ,Arrays_Gpu,false);  //-NO INITIAL MEMORY.
     FSMinDist_g   =new agfloat  ("FSMinDist_g",Arrays_Gpu,false);  //-NO INITIAL MEMORY.
@@ -486,7 +486,7 @@ void JSphGpu::AllocGpuMemoryParticles(unsigned np){
     PsiClean_g    =new agfloat("PhiClean_g"   ,Arrays_Gpu,true);
     PsiCleanPre_g =new agfloat("PhiCleanPre_g",Arrays_Gpu,false);
     PsiCleanRhs_g =new agfloat("PhiCleanRhs_g",Arrays_Gpu,false);
-    CsPsiClean_g  =new agfloat("CsPhiClean_g" ,Arrays_Gpu,false); 
+    CsPsiClean_g  =new agfloat("CsPhiClean_g" ,Arrays_Gpu,false);
   }
   //<vs_divclean_end>
 
@@ -517,7 +517,7 @@ void JSphGpu::ResizeGpuMemoryParticlesData(unsigned ndatagpu
 /// Returns the allocated memory on the CPU.
 /// Devuelve la memoria reservada en CPU.
 //==============================================================================
-llong JSphGpu::GetAllocMemoryCpu()const{  
+llong JSphGpu::GetAllocMemoryCpu()const{
   llong s=JSph::GetAllocMemoryCpu();
   //-Allocated for particle arrays on CPU.
   if(Arrays_Cpu)s+=Arrays_Cpu->GetAllocMemoryCpu();
@@ -532,7 +532,7 @@ llong JSphGpu::GetAllocMemoryCpu()const{
 /// Returns the allocated memory in the GPU.
 /// Devuelve la memoria reservada en GPU.
 //==============================================================================
-llong JSphGpu::GetAllocMemoryGpu()const{  
+llong JSphGpu::GetAllocMemoryGpu()const{
   llong s=0;
   //-Allocated for particle arrays on GPU.
   if(Arrays_Gpu)s+=Arrays_Gpu->GetAllocMemoryGpu();
@@ -640,20 +640,20 @@ unsigned JSphGpu::ParticlesDataDown(unsigned n,unsigned pini,bool code
     Code_g->CuCopyToHostOffset(pini,Code_c,0,n);
   }
   //-Creates simple CPU pointers.
-  unsigned* idpc   =Idp_c->ptr(); 
-  tdouble2* posxyc =Posxy_c->ptr(); 
-  double*   poszc  =Posz_c->ptr(); 
-  tfloat4*  velrhoc=Velrho_c->ptr(); 
+  unsigned* idpc   =Idp_c->ptr();
+  tdouble2* posxyc =Posxy_c->ptr();
+  double*   poszc  =Posz_c->ptr();
+  tfloat4*  velrhoc=Velrho_c->ptr();
   typecode* codec  =Code_c->ptr();
 
   //-Obtain filter data on CPU memory. //<vs_outpaarts_ini>
-  byte* filter=NULL; 
+  byte* filter=NULL;
   if(filterg){
     filter=(byte*)AuxRho_c->ptr();
     cudaMemcpy(filter,filterg+pini,sizeof(byte)*n,cudaMemcpyDeviceToHost);
   }//<vs_outpaarts_end>
   Check_CudaErroor("Failed copying data from GPU.");
-  
+
   //-Eliminate non-normal particles (periodic & others).
   const bool usefilter=(filter!=NULL);
   unsigned nfilter=0;
@@ -694,6 +694,15 @@ int JSphGpu::SelecDevice(int gpuid){
   JDsGpuInfo::ShowGpusInfo(Log);
   //-GPU selection.
   Log->Print("[GPU Hardware]");
+  if(gpuid==-1){
+    //-Library mode: reuse the existing CUDA context instead of selecting a new device.
+    int current_dev=0;
+    cudaGetDevice(&current_dev);
+    GpuInfo->SelectGpu(current_dev);
+    GpuInfo->ShowSelectGpusInfo(Log);
+    Log->Printf("  Reusing existing CUDA context on device %d",current_dev);
+    return(current_dev);
+  }
   GpuInfo->SelectGpu(gpuid);
   GpuInfo->ShowSelectGpusInfo(Log);
   cudaSetDevice(GpuInfo->GetGpuId());
@@ -860,12 +869,12 @@ void JSphGpu::PreInteraction_Forces(TpInterStep interstep){
 
   //<vs_divclean_ini>
   if(DivCleaning){
-    PsiCleanRhs_g->Reserve(); 
+    PsiCleanRhs_g->Reserve();
     CsPsiClean_g->Reserve();
     PsiCleanRhs_g->CuMemset(0,Np);
     CsPsiClean_g->CuMemset(0,Np);
     CsPsiCleanMax=0;
-  }  
+  }
   //vs_divclean_end>
 
   //-Initialise arrays.
@@ -876,7 +885,7 @@ void JSphGpu::PreInteraction_Forces(TpInterStep interstep){
   if(AG_CPTR(Delta_g))Delta_g->CuMemset(0,Np);                      //Deltag[]=0
   if(AG_CPTR(Sps2Strain_g))Sps2Strain_g->CuMemsetOffset(Npb,0,npf); //Sps2Straing[]=(0)
   if(AG_CPTR(NoPenShift_g))NoPenShift_g->CuMemset(0,Np);            //NoPenShiftg[]=(0) //<vs_m2dbcNP
-  
+
   //-Select particles for shifting.
   if(AC_CPTR(ShiftPosfs_g))Shifting->InitGpu(npf,Npb,Posxy_g->cptr()
     ,Posz_g->cptr(),ShiftPosfs_g->ptr());
@@ -1103,7 +1112,7 @@ void JSphGpu::ComputeSymplecticCorr(double dt){
 double JSphGpu::DtVariable(bool final){
   //-dt1 depends on force per unit mass.
   const double acemax=sqrt(double(AceMax));
-  const double dt1=(AceMax? (sqrt(double(KernelH)/AceMax)): DBL_MAX); 
+  const double dt1=(AceMax? (sqrt(double(KernelH)/AceMax)): DBL_MAX);
   //-dt2 combines the Courant and the viscous time-step controls.
   const double dt2=double(KernelH)/(max(Cs0,VelMax*10.)+double(KernelH)*ViscDtMax);
   //-dt3 uses the maximum speed of sound across all structure particles.
@@ -1128,7 +1137,7 @@ double JSphGpu::DtVariable(bool final){
     ,dt,AceMax,VelMax,ViscDtMax,Nstep));
   }
   //-Correct dt with minimum allowed value.
-  if(dt<double(DtMin)){ 
+  if(dt<double(DtMin)){
     dt=double(DtMin); DtModif++;
     if(DtModif>=DtModifWrn){
       Log->PrintfWarning("%d DTs adjusted to DtMin (t:%g, nstep:%u)",DtModif,TimeStep,Nstep);
@@ -1192,7 +1201,7 @@ void JSphGpu::RunMotion(double stepdt){
         cusph::MoveMatBound(PeriActive,Simulate2D,m.count,m.idbegin-CaseNfixed
           ,m.matmov,stepdt,RidpMotg,Posxy_g->ptr(),Posz_g->ptr(),Dcell_g->ptr()
           ,Velrho_g->ptr(),Code_g->ptr(),AG_PTR(BoundNor_g));
-      }      
+      }
     }
   }
   //-Management of Multi-Layer Pistons.
@@ -1289,7 +1298,7 @@ void JSphGpu::DgSaveVtkParticlesGpu(std::string filename,int numfile
   //-Creates VTK file.
   DgSaveVtkParticlesCpu(filename,numfile,0,np,posh,codeh,idph,velrhoh,fsnormalh);
   //-Deallocates memory.
-  delete[] posh;  
+  delete[] posh;
   delete[] codeh;
   delete[] idph;
   delete[] velrhoh;
@@ -1317,7 +1326,7 @@ void JSphGpu::DgSaveVtkParticlesGpu(std::string filename,int numfile
   //-Creates VTK file.
   DgSaveVtkParticlesCpu(filename,numfile,0,np,posh,codeh,idph,velrhoh);
   //-Deallocates memory.
-  delete[] posh;  
+  delete[] posh;
   delete[] codeh;
   delete[] idph;
   delete[] velrhoh;
@@ -1395,7 +1404,7 @@ void JSphGpu::DgSaveVtkParticlesGpu(std::string filename,int numfile
     type=new byte[n];
     typecode* aux=new typecode[n];
     cudaMemcpy(aux,codeg+pini,sizeof(typecode)*n,cudaMemcpyDeviceToHost);
-    for(unsigned p=0;p<n;p++){ 
+    for(unsigned p=0;p<n;p++){
       const typecode cod=aux[p];
       byte tp=99;
       if(CODE_IsFixed(cod))tp=0;

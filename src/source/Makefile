@@ -24,7 +24,7 @@ endif
 
 # -std=c++0x ---> Used to avoid errors for calls to enums
 ifeq ($(USE_DEBUG), YES)
-  CCFLAGS=-c -O0 -g -Wall -fopenmp -D_WITHGPU -std=c++0x -D_WITHMR 
+  CCFLAGS=-c -O0 -g -Wall -fopenmp -D_WITHGPU -std=c++0x -D_WITHMR
 else
   CCFLAGS=-c -O3 -fopenmp -D_WITHGPU -std=c++0x -D_WITHMR
   ifeq ($(USE_FAST_MATH), YES)
@@ -71,7 +71,7 @@ ifeq ($(CUDAVER),11)
   DIRTOOLKIT=/exports/opt/NVIDIA/cuda-11.7
 endif
 ifeq ($(CUDAVER),12)
-  DIRTOOLKIT=/exports/opt/NVIDIA/cuda-12.8
+  DIRTOOLKIT=/usr/local/cuda-12.3
 endif
 
 #=============== Select GPU architectures ===============
@@ -141,11 +141,11 @@ OBSPH:=$(OBSPH) JSphShiftingAdv.o JSph.o JDsAccInput.o JSphCpu.o JSphCpu_mdbc.o 
 OBSPH:=$(OBSPH) JDsInitialize.o JSphMk.o JDsOutputParts.o JDsPartsInit.o JDsFixedDt.o JDsViscoInput.o
 OBSPH:=$(OBSPH) JDsOutputTime.o JDsTimers.o JWaveSpectrumGpu.o main.o
 OBSPHSINGLE=JCellDivCpuSingle.o JPartsLoad4.o JSphCpuSingle.o
-OBCOMMONGPU=FunctionsCuda.o JObjectGpu.o 
-OBSPHGPU=JArraysGpu.o JDebugSphGpu.o JCellDivGpu.o JSphGpu.o JDsGpuInfo.o 
+OBCOMMONGPU=FunctionsCuda.o JObjectGpu.o
+OBSPHGPU=JArraysGpu.o JDebugSphGpu.o JCellDivGpu.o JSphGpu.o JDsGpuInfo.o
 OBSPHSINGLEGPU=JCellDivGpuSingle.o JSphGpuSingle.o
 OBCUDA=JCellDivGpu_ker.o JCellDivGpuSingle_ker.o JDsPips_ker.o JDsGauge_ker.o JReduSum_ker.o JSphShifting_ker.o
-OBCUDA:=$(OBCUDA) JDsAccInput_ker.o JSphGpu_ker.o JSphGpuSimple_ker.o JWaveOrder2_ker.o 
+OBCUDA:=$(OBCUDA) JDsAccInput_ker.o JSphGpu_ker.o JSphGpuSimple_ker.o JWaveOrder2_ker.o
 OBWAVERZ=JMLPistonsGpu.o JRelaxZonesGpu.o
 OBWAVERZCUDA=JRelaxZone_ker.o
 OBCHRONO=JChronoGeoObj.o JChronoObjects.o
@@ -165,7 +165,7 @@ OBJECTS:=$(OBJECTS) $(OBINOUT) $(OBINOUTGPU) $(OBMESH) $(OBVRES) $(OBFLEXSTRUC)
 #=============== DualSPHysics libs to be included ===============
 JLIBS=${LIBS_DIRECTORIES}
 ifeq ($(COMPILE_CHRONO), YES)
-  JLIBS:=$(JLIBS) -ldsphchrono -lChronoEngine 
+  JLIBS:=$(JLIBS) -ldsphchrono -lChronoEngine
 endif
 ifeq ($(COMPILE_WAVEGEN), YES)
   JLIBS:=$(JLIBS) -ljwavegen_64
@@ -186,7 +186,7 @@ endif
 ifeq ($(USE_FAST_MATH), YES)
   NCCFLAGS+= -use_fast_math
 endif
-ifeq ($(CUDAVER),11)	
+ifeq ($(CUDAVER),11)
   NCCFLAGS+= -Wno-deprecated-gpu-targets
 endif
 
@@ -207,8 +207,8 @@ endif
 $(EXECS_DIRECTORY)/$(EXECNAME):  $(OBJECTS)
 	$(CC) $(OBJECTS) $(CCLINKFLAGS) -o $@ $(JLIBS)
 
-.cpp.o: 
-	$(CC) $(CCFLAGS) $< 
+.cpp.o:
+	$(CC) $(CCFLAGS) $<
 
 JSphGpu_ker.o: JSphGpu_ker.cu
 	$(NCC) $(NCCFLAGS) JSphGpu_ker.cu
